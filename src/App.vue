@@ -1,28 +1,40 @@
 <template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
-  </div>
+  <v-app :dark="isDark">
+    <v-card color="grey lighten-4" flat tile>
+      <v-toolbar dense color="primary" dark>
+        <v-app-bar-nav-icon></v-app-bar-nav-icon>
+        <v-toolbar-title class="headline">Список дел</v-toolbar-title>
+
+        <v-spacer></v-spacer>
+
+        <v-tooltip bottom>
+          <template v-slot:activator="{ on }">
+            <v-btn icon @click="show = !show" v-on="on">
+              <v-icon @click="isDark = !isDark">
+                {{ show ? 'mdi-check-circle-outline' : 'mdi-check-circle' }}
+              </v-icon>
+            </v-btn>
+          </template>
+          <span>{{ isDark ? 'Темная тема' : 'Светлая тема'}}</span>
+        </v-tooltip>
+
+      </v-toolbar>
+
+      <appBoard></appBoard>
+    </v-card>
+  </v-app>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import Board from "@/components/Board";
 
 export default {
-  name: 'App',
   components: {
-    HelloWorld
-  }
-}
+    appBoard: Board
+  },
+  data: () => ({
+    show: true,
+    isDark: true
+  }),
+};
 </script>
-
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>
